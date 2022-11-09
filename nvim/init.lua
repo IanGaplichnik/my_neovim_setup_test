@@ -1,0 +1,7 @@
+require("ian.plugins-setup")
+require("ian.core.options")
+require("ian.core.keymaps")
+require("ian.core.colorscheme")
+require("ian.plugins.comment")
+require("ian.plugins.nvim-tree")
+require("ian.plugins.lualine")
