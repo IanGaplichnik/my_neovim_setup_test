@@ -10,11 +10,6 @@ if not cmp_nvim_lsp_status then
   return
 end
 
-local rt_status, rt = pcall(require, "rust_analyzer")
-if not rt_status then
-    return
-end    
-
 local keymap = vim.keymap -- for conciseness
 
 -- enable keybinds only for when lsp server available
@@ -40,28 +35,15 @@ end
   -- used to enable autocompletion (assign to every lsp server config)
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
-
-
--- rust setup
-local rt = require("rust-tools")
-
-rt.setup({
-  server = {
-    -- on_attach is a callback called when the language server attachs to the buffer
+lspconfig["clangd"].setup{
+    capabilities = capabilities,
     on_attach = on_attach,
-    settings = {
-      -- to enable rust-analyzer settings visit:
-      -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-      ["rust-analyzer"] = {
-        -- enable clippy on save
-        checkOnSave = {
-          command = "clippy",
-        },
-      },
-    },
-  },
-})
+}
 
+lspconfig["rust_analyzer"].setup{
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
 
 -- lua server
 lspconfig["sumneko_lua"].setup({
